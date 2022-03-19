@@ -8,6 +8,6 @@ public class WheelData : ScriptableObject
 	public float weight;
 	public float radius;
 
-	[Tooltip("Friction Coeficient for street tires normally is 1.0 (racing tyres 1.5)")]
+	[Tooltip("Friction Coeficient for street tyres normally is 1.0 (racing tyres 1.5)")]
 	public float frictionCoefficient;
 }
