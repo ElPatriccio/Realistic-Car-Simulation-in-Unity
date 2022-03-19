@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442f1aabfc6154d41ab47691324f2f28, type: 3}
+  m_Name: MazdaRX7
+  m_EditorClassIdentifier: 
+  torqueCurveFileName: Mazda RX7
+  weight: 1300
+  brakeForce: 5000
+  maxRpm: 7000
+  wheelbase: 2.42
+  g1: 3.674
+  g2: 2.217
+  g3: 1.432
+  g4: 1
+  g5: 0.825
+  g6: 0
+  gR: 2.9
+  diff: 3.909
+  cgToGround: 0.67
+  cgToFrontWheels: 1.21
+  cgToRearWheels: 1.21

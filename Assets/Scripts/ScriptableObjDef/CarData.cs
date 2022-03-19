@@ -13,6 +13,19 @@ public class CarData : ScriptableObject
 	public float maxRpm;
 	public float wheelbase;
 
+	#region Gear Ratios
+
+	public float g1;
+	public float g2;
+	public float g3;
+	public float g4;
+	public float g5;
+	public float g6;
+	public float gR;
+	public float diff;
+
+	#endregion
+
 	[Tooltip("cg = Center of Gravity")]
 	public float cgToGround;
 	[Tooltip("cg = Center of Gravity")]

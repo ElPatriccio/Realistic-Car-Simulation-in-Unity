@@ -15,4 +15,15 @@ public static class Utility
 		}
 		return torqueCurve;
 	}
+
+	public static bool CheckIfVectorsHaveOpposingDir(Vector3 vec1, Vector3 vec2)
+	{
+		return vec1.normalized + vec2.normalized == Vector3.zero;
+	}
+
+	public static int GetPrefix(Vector3 vec1, Vector3 vec2)
+	{
+		
+		return CheckIfVectorsHaveOpposingDir(vec1, vec2) ? -1 : 1;
+	}
 }

@@ -30,11 +30,10 @@ public class LongForces : MonoBehaviour
 	//load = Wr and Wf
 	//traction torque = traction force * wheel radius
 
-	[SerializeField] private TorqueCurve torqueCurve;
+	//[SerializeField] private TorqueCurve torqueCurve;
 
 	public GameObject frontWheel;
 	public GameObject rearWheel;
-	private Dictionary<float, int> rpmToTorque = new Dictionary<float, int>();
 
 	private Rigidbody rb;
 
@@ -99,6 +98,10 @@ public class LongForces : MonoBehaviour
 		C_distanceToRearWheels = new Vector2(Math.Abs(C_centerOfMass.x - rearWheel.transform.localPosition.z), 0).magnitude;
 		C_distanceToGround = new Vector2(0, transform.position.y + rb.centerOfMass.y).magnitude;
 		C_wheelbase = new Vector2(Math.Abs(frontWheel.transform.localPosition.z - rearWheel.transform.localPosition.z), 0).magnitude;
+		Debug.Log("Cg to Front: " + C_distanceToFrontWheels);
+		Debug.Log("Cg to Rear: " + C_distanceToRearWheels);
+		Debug.Log("Cg to Ground: " + C_distanceToGround);
+		Debug.Log("Wheelbase: " + C_wheelbase);
 	}
 
 
@@ -163,7 +166,7 @@ public class LongForces : MonoBehaviour
 		}
 		else T_brake = Vector3.zero;
 
-		T_drive = 0.7f * 2.66f * 3.42f * driveInput * torqueCurve.GetTorque(engineRpm) * transform.forward;
+		//T_drive = 0.7f * 2.66f * 3.42f * driveInput * torqueCurve.GetTorque(engineRpm) * transform.forward;
 		F_drive = T_drive / C_wheelRadius;
 		tractionForce = slipRatio * 20 * rearWheelLoad;
 		if (tractionForce > rearWheelMaxForce) tractionForce = rearWheelMaxForce;
@@ -195,17 +198,13 @@ public class LongForces : MonoBehaviour
 	private void OnDrawGizmos()
 	{
 
-		Vector3 start = transform.position + transform.forward * 1.5f;
-		Vector3 end = start + F_long * 0.001f;
-		if (F_long.normalized + transform.forward == Vector3.zero) Gizmos.color = Color.red;
-		else Gizmos.color = Color.green;
-		Gizmos.DrawLine(start, end);
+		//Vector3 start = transform.position + transform.forward * 1.5f;
+		//Vector3 end = start + F_long * 0.001f;
+		//if (F_long.normalized + transform.forward == Vector3.zero) Gizmos.color = Color.red;
+		//else Gizmos.color = Color.green;
+		//Gizmos.DrawLine(start, end);
 
-		Gizmos.color = Color.red;
-		Gizmos.DrawLine(start, (end - F_long * 0.001f + T_brake));
+		//Gizmos.color = Color.red;
+		//Gizmos.DrawLine(start, (end - F_long * 0.001f + T_brake));
 	}
 }
-
-
-
-
