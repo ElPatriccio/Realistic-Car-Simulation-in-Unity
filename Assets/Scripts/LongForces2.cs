@@ -10,6 +10,7 @@ public class LongForces2 : MonoBehaviour
 	private Text rpmText;
 	private Text wheelRotText;
 	private Text currentGearText;
+	private Text adWheelRotText;
 
 	private Rigidbody rb;
 
@@ -56,6 +57,7 @@ public class LongForces2 : MonoBehaviour
 	#region Wheel Forces
 
 	private float T_drive = 0;
+	private float T_traction;
 
 	#endregion
 
@@ -67,12 +69,22 @@ public class LongForces2 : MonoBehaviour
 	private Vector3 directionOfDrive;
 
 	private float engineRpm = 1000f;
-	private float rearWheelLoad;
 	private bool isReverse = false;
-	private float wheelRotationRate = 0f;
 
 	private float gearIndex = 1;
 	private float currentGear;
+
+	#endregion
+
+	#region Wheel Info
+
+	private float rearWheelLoad;
+	private float wheelRotationRate = 0f;
+	private float wheelAcc = 0f;
+	private float wheelVel = 0f;
+	private float advWheelRotationRate = 0f;
+
+	private float slipRatio = 0f;
 
 	#endregion
 
@@ -93,6 +105,7 @@ public class LongForces2 : MonoBehaviour
 		rpmText = GameObject.Find("RPM").GetComponent<Text>();
 		wheelRotText = GameObject.Find("WheelRotRate").GetComponent<Text>();
 		currentGearText = GameObject.Find("CurrentGear").GetComponent<Text>();
+		adWheelRotText = GameObject.Find("AdWheelRot").GetComponent<Text>();
 
 		#endregion
 	}
@@ -168,11 +181,6 @@ public class LongForces2 : MonoBehaviour
 	{
 		if (velocity != Vector3.zero) directionOfDrive = velocity.normalized;
 
-		#region Temporary Wheelrotation anim
-		wheelFront.transform.Rotate((velocity.magnitude / wheelData.radius) * 57.2957f * Time.fixedDeltaTime * transform.forward);
-		wheelRear.transform.Rotate((velocity.magnitude / wheelData.radius) * 57.2957f * Time.fixedDeltaTime * transform.forward);
-		#endregion
-
 		#region Wheel Load
 
 		float newRearLoad = (carData.cgToFrontWheels / carData.wheelbase) * (carData.weight * 9.81f) + ((carData.cgToGround / carData.wheelbase) * carData.weight * (acceleration.magnitude * Utility.GetPrefix(acceleration, directionOfDrive)));
@@ -184,6 +192,26 @@ public class LongForces2 : MonoBehaviour
 
 		wheelRotationRate = velocity.magnitude / wheelData.radius;
 
+		//wheelAcc = (T_drive - T_traction) / (wheelData.weight * (wheelData.radius * wheelData.radius) / 2);
+		//wheelVel += wheelAcc * Time.fixedDeltaTime;
+
+
+		wheelFront.transform.Rotate(wheelRotationRate * 57.2957f * Time.fixedDeltaTime * transform.forward);
+		wheelRear.transform.Rotate(wheelRotationRate * 57.2957f * Time.fixedDeltaTime * transform.forward);
+
+		#endregion
+
+		#region Slip
+
+		//slipRatio = velocity.magnitude > 0 ? (wheelVel * wheelData.radius - velocity.magnitude) / velocity.magnitude : 0;
+		//if (slipRatio < -1) slipRatio = -1; 
+		//Debug.Log("Slip: " + slipRatio);
+
+		//F_traction = (20 * slipRatio) * rearWheelLoad * directionOfDrive;
+		//T_traction = F_traction.magnitude * wheelData.radius;
+		
+		////Debug.Log("Traction: " + T_traction);
+		
 		#endregion
 
 		engineRpm = wheelRotationRate * currentGear * carData.diff * 60 / (2 * 3.14f);
@@ -225,6 +253,7 @@ public class LongForces2 : MonoBehaviour
 		rpmText.text = "RPM: " + (int)engineRpm + "rpm";
 		wheelRotText.text = "Wheel Rot: " + (int)wheelRotationRate + "rad/s";
 		currentGearText.text = "Current Gear: " + gearIndex;
+		adWheelRotText.text = "Adv. Rot: " + wheelVel + "rad/s";
 	}
 
 	private void OnDrawGizmos()
