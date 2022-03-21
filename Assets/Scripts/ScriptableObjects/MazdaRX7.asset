@@ -23,7 +23,7 @@ MonoBehaviour:
   g4: 1
   g5: 0.825
   g6: 0
-  gR: 2.9
+  gR: -2.9
   diff: 3.909
   cgToGround: 0.67
   cgToFrontWheels: 1.21
