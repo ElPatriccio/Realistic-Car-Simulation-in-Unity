@@ -245,7 +245,7 @@ public class CarSimulator : MonoBehaviour
 
 		rb.AddForce(F_rr, ForceMode.Force);
 		rb.AddForce(F_drag, ForceMode.Force);
-		rb.AddForceAtPosition(100 * rb.velocity.magnitude * -transform.up, transform.position, ForceMode.Force);
+		rb.AddForceAtPosition(350 * rb.velocity.magnitude * -transform.up, transform.position, ForceMode.Force);
 
 		SetWheelTransforms();
 
